@@ -1,0 +1,15 @@
+---
+layout: default
+---
+
+<article class="piece">
+
+  <h1>{{ page.title }}</h1>
+
+  {% if page.subtitle %}<p><em>{{ page.subtitle }}</em></p>{% endif %}
+
+  {{ content }}
+
+  {% include canonical.html %}
+
+</article>

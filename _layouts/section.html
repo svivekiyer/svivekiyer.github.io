@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<h1>{{ page.title }}</h1>
+
+{% if page.intro %}<p>{{ page.intro }}</p>{% endif %}
+
+{% assign docs = site[page.collection] | sort: "date" | reverse %}
+
+{% if docs.size == 0 %}
+
+  <p><em>Nothing here yet.</em></p>
+
+{% else %}
+
+  <ul class="section-list">
+  {% for doc in docs %}
+    <li>
+      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+      {% if doc.summary %}<br><span>{{ doc.summary }}</span>{% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+
+{% endif %}

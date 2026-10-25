@@ -1,0 +1,66 @@
+title: Vivek Iyer
+tagline: Infrastructure engineering — storage, SAN, backup
+description: >-
+  Long-form writing on infrastructure I have built, and the gaps I keep finding in it.
+
+url: "https://svivekiyer.github.io"
+baseurl: ""
+
+theme: minima
+
+github_username: svivekiyer
+
+linkedin_url: "https://www.linkedin.com/in/svivekiyer/"
+
+collections:
+  articles:
+    output: true
+    permalink: /articles/:name/
+  architecture:
+    output: true
+    permalink: /architecture/:name/
+  tooling:
+    output: true
+    permalink: /tooling/:name/
+  nuggets:
+    output: true
+    permalink: /nuggets/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: articles
+    values:
+      layout: piece
+      section: Articles
+  - scope:
+      path: ""
+      type: architecture
+    values:
+      layout: piece
+      section: Architecture
+  - scope:
+      path: ""
+      type: tooling
+    values:
+      layout: piece
+      section: Tooling
+  - scope:
+      path: ""
+      type: nuggets
+    values:
+      layout: piece
+      section: Nuggets
+
+header_pages:
+  - articles.md
+  - architecture.md
+  - tooling.md
+  - nuggets.md
+  - about.md
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

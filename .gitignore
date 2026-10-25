@@ -1,0 +1,9 @@
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Local read-through renders produced by tools/preview.py
+.preview-*.html
+Gemfile.lock
+.DS_Store
