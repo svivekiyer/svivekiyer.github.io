@@ -1,16 +1,17 @@
 title: Vivek Iyer
-tagline: Infrastructure engineering — storage, SAN, backup
+tagline: Storage platform engineering — distributed systems and data protection
 description: >-
-  Long-form writing on infrastructure I have built, and the gaps I keep finding in it.
+  Storage platform engineering — distributed filesystems, data protection, and the software that operates them. Long-form writing, paired with code that runs anywhere.
 
 url: "https://svivekiyer.github.io"
 baseurl: ""
 
-theme: minima
-
 github_username: svivekiyer
-
+github_url: "https://github.com/svivekiyer"
 linkedin_url: "https://www.linkedin.com/in/svivekiyer/"
+
+# No theme gem. The layouts and includes in this repository are the whole site,
+# which keeps what is rendered and what is in the repo the same thing.
 
 collections:
   articles:
@@ -25,6 +26,24 @@ collections:
   nuggets:
     output: true
     permalink: /nuggets/:name/
+
+# Navigation. Entries carrying a `collection` key are hidden until that
+# collection has something in it, so the site never advertises an empty room.
+nav:
+  - title: Articles
+    url: /articles/
+    collection: articles
+  - title: Architecture
+    url: /architecture/
+    collection: architecture
+  - title: Tooling
+    url: /tooling/
+    collection: tooling
+  - title: Nuggets
+    url: /nuggets/
+    collection: nuggets
+  - title: About
+    url: /about/
 
 defaults:
   - scope:
@@ -51,13 +70,6 @@ defaults:
     values:
       layout: piece
       section: Nuggets
-
-header_pages:
-  - articles.md
-  - architecture.md
-  - tooling.md
-  - nuggets.md
-  - about.md
 
 exclude:
   - README.md

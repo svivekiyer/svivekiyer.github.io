@@ -1,0 +1,143 @@
+---
+layout: default
+---
+
+{%- assign articles = site.articles | sort: "date" | reverse -%}
+{%- assign featured = articles | first -%}
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Staff engineer · Storage platforms · London</p>
+    <h1>I build the software that runs storage at petabyte scale.</h1>
+    <div class="rule-ab" aria-hidden="true"></div>
+    <p class="lede">Seventeen years in enterprise storage and data protection. The part that interests me is the half that is software — the platform an estate is actually operated through, the automation underneath it, and the distributed filesystems and hybrid-cloud namespaces it all runs on.</p>
+    <p class="sub">I write here about problems that keep recurring across vendors and estates, and publish runnable code for the ones that generalise.</p>
+    <div class="btn-row">
+      {%- if featured -%}
+        <a class="btn btn-primary" href="{{ featured.url | relative_url }}">Read the latest</a>
+      {%- endif -%}
+      <a class="btn" href="{{ site.github_url }}">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a>
+      <a class="btn" href="{{ site.linkedin_url }}">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<section class="band band-tint">
+  <div class="wrap">
+    <div class="band-head">
+      <h2>What I work on</h2>
+      <p>Four things, in roughly the order they take up my week.</p>
+    </div>
+    <div class="grid grid-4">
+
+      <div class="facet">
+        <h3>Distributed filesystems and global namespaces</h3>
+        <p>Parallel and scale-out filesystems at petabyte scale — cluster anatomy, quorum, declustered RAID, multi-tenant filesets — and global namespaces backed by object storage, where the real failure modes are cache coherency, cross-site asynchronous replication and a non-zero RPO. The appliance is the easy part. The distributed system underneath is not.</p>
+      </div>
+
+      <div class="facet">
+        <h3>Storage platform engineering</h3>
+        <p>Most storage teams operate their estate through whatever consoles the vendors shipped. I build the alternative: an authenticated platform in async Python over Elasticsearch, pulling a dozen independent systems — arrays, filers, backup, monitoring, ITSM, identity — behind one API, with per-source circuit breakers so an upstream outage surfaces as an error instead of as "nothing found".</p>
+      </div>
+
+      <div class="facet">
+        <h3>Data protection and recovery</h3>
+        <p>Backup and DR as a fleet platform rather than a nightly job — policy-driven protection across clusters and regions, immutability, restore validation, and failure triage that tells a missed cycle apart from a broken one. Plus the forensic side: reconstructing who deleted what, and when, from the audit record.</p>
+      </div>
+
+      <div class="facet">
+        <h3>Data at scale</h3>
+        <p>Over a hundred million filesystem objects indexed and billions of audit events made queryable, so capacity forecasting, ownership attribution and lifecycle decisions become measurements rather than opinions. Most storage estates cannot answer basic questions about their own contents. This is the work of making them answerable.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="band-head">
+      <h2>Writing</h2>
+      <p>Long-form, paired with working code wherever the code can be made public.</p>
+    </div>
+
+    {%- if featured -%}
+      <div class="grid grid-2">
+
+        <a class="card card-feature" href="{{ featured.url | relative_url }}">
+          {%- if featured.image -%}
+            <img class="card-shot" src="{{ featured.image | relative_url }}" alt="" width="1500" height="1200">
+          {%- endif -%}
+          <div class="card-body">
+            <p class="meta">
+              <span>{{ featured.date | date: "%-d %b %Y" }}</span>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>{{ featured.content | strip_html | number_of_words | divided_by: 220 | plus: 1 }} min read</span>
+              {%- if featured.repo -%}
+                <span class="dot" aria-hidden="true">·</span>
+                <span>{{ featured.repo }}</span>
+              {%- endif -%}
+            </p>
+            <h3>{{ featured.title }}</h3>
+            <p>{{ featured.summary | default: featured.subtitle }}</p>
+            <span class="more">Read it →</span>
+          </div>
+        </a>
+
+        {%- for doc in articles offset: 1 limit: 4 -%}
+          <a class="card" href="{{ doc.url | relative_url }}">
+            <div class="card-body">
+              <p class="meta">
+                <span>{{ doc.date | date: "%-d %b %Y" }}</span>
+                <span class="dot" aria-hidden="true">·</span>
+                <span>{{ doc.content | strip_html | number_of_words | divided_by: 220 | plus: 1 }} min read</span>
+              </p>
+              <h3>{{ doc.title }}</h3>
+              <p>{{ doc.summary | default: doc.subtitle }}</p>
+              <span class="more">Read it →</span>
+            </div>
+          </a>
+        {%- endfor -%}
+
+      </div>
+
+      {%- if articles.size > 1 -%}
+        <p class="band-more"><a href="{{ '/articles/' | relative_url }}">All writing →</a></p>
+      {%- endif -%}
+    {%- else -%}
+      <p class="empty">Nothing published yet.</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<section class="band band-tint">
+  <div class="wrap">
+    <div class="band-head">
+      <h2>Code</h2>
+      <p>Public repositories. Each one stands on its own — clone it, run it, no article required.</p>
+    </div>
+
+    <div class="grid grid-2">
+      <a class="repo" href="{{ site.github_url }}/fabric-compare">
+        <p class="name">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.25.25 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg>
+          fabric-compare
+        </p>
+        <p>Reads <code>switchshow</code> from two Fibre Channel fabrics and prints them side by side, so the asymmetries between the A side and the B side are visible at a glance instead of inferred from two separate terminal windows. Dependency-free POSIX shell and awk. Ships with synthetic sample data, so it runs anywhere.</p>
+        <p class="tags">
+          <span class="tag">shell</span>
+          <span class="tag">awk</span>
+          <span class="tag">Fibre Channel</span>
+          <span class="tag">no dependencies</span>
+        </p>
+      </a>
+    </div>
+
+    <p class="band-more"><a href="{{ site.github_url }}?tab=repositories">Everything on GitHub →</a></p>
+
+  </div>
+</section>

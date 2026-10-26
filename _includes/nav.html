@@ -1,0 +1,32 @@
+<header class="site-head">
+  <div class="wrap">
+
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="mark" aria-hidden="true"></span>
+      {{ site.title }}
+    </a>
+
+    <nav class="site-nav" aria-label="Main">
+      {%- for item in site.nav -%}
+
+        {%- comment -%} Hide a section until it has something in it. {%- endcomment -%}
+        {%- assign show = true -%}
+        {%- if item.collection -%}
+          {%- assign docs = site[item.collection] -%}
+          {%- if docs.size == 0 -%}{%- assign show = false -%}{%- endif -%}
+        {%- endif -%}
+
+        {%- if show -%}
+          {%- assign is_cur = false -%}
+          {%- if page.url == item.url -%}{%- assign is_cur = true -%}{%- endif -%}
+          {%- if item.collection -%}
+            {%- if page.collection == item.collection -%}{%- assign is_cur = true -%}{%- endif -%}
+          {%- endif -%}
+          <a href="{{ item.url | relative_url }}"{% if is_cur %} aria-current="page"{% endif %}>{{ item.title }}</a>
+        {%- endif -%}
+
+      {%- endfor -%}
+    </nav>
+
+  </div>
+</header>

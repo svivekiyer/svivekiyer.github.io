@@ -4,6 +4,7 @@ subtitle: Two fabrics, a single view. I built one in 2011. It still isn't someth
 date: 2026-10-25
 summary: A gap I found as a junior SAN admin in 2011 — no tool shows you fabric A and fabric B next to each other at the moment you need to compare them — is still a gap today, on Brocade, on Cisco, and on network switches too
 repo: fabric-compare
+image: /assets/img/report-modern-port-join.png
 ---
 
 A storage network is built in pairs. Fabric A and fabric B. Two physically separate networks, no cables between them, each able to carry all the traffic on its own. A server gets a path through A and a path through B. If one fabric dies — a bad firmware upgrade, a failed chassis, someone pulling the wrong cable — the other carries everything and nobody notices.

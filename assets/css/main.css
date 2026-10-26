@@ -1,0 +1,536 @@
+/* ==========================================================================
+   svivekiyer.github.io
+
+   Palette is lifted from the fabric-compare report output on purpose -- the
+   amber/blue pair is the A-side/B-side split the tool uses, so the site and
+   the work it describes read as one thing.
+
+   Body copy is set in a serif. Long-form technical writing is the point of
+   the site, and the stack below resolves to Charter on macOS, Sitka on
+   Windows and Georgia almost everywhere else, so it costs no web font.
+   ========================================================================== */
+
+:root {
+  --ink:    #0f172a;
+  --body:   #334155;
+  --muted:  #64748b;
+  --faint:  #94a3b8;
+  --line:   #e2e8f0;
+  --bg:     #ffffff;
+  --panel:  #f8fafc;
+  --panel2: #f1f5f9;
+
+  --fabric-a: #d97706;
+  --fabric-b: #2563eb;
+  --link:     #1d4ed8;
+
+  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --prose: 68ch;
+  --wide:  1120px;
+  --pad:   24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink:    #f1f5f9;
+    --body:   #cbd5e1;
+    --muted:  #94a3b8;
+    --faint:  #64748b;
+    --line:   #1e293b;
+    --bg:     #0b1120;
+    --panel:  #0f172a;
+    --panel2: #152033;
+
+    --fabric-a: #fbbf24;
+    --fabric-b: #60a5fa;
+    --link:     #93c5fd;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  font-family: var(--sans);
+  font-size: .9rem;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 16px;
+  border-radius: 0 0 8px 0;
+}
+.skip:focus { left: 0; text-decoration: none; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, .sans { font-family: var(--sans); color: var(--ink); }
+
+h1, h2, h3, h4 {
+  line-height: 1.2;
+  letter-spacing: -0.021em;
+  font-weight: 650;
+  margin: 2.4rem 0 0.75rem;
+}
+
+h1 { font-size: 2.1rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.18rem; }
+
+p, ul, ol { margin: 0 0 1.25rem; }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
+
+code, kbd, samp {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--panel2);
+  padding: 0.12em 0.36em;
+  border-radius: 4px;
+}
+
+pre {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px 18px;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; font-size: inherit; }
+
+blockquote {
+  margin: 1.6rem 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid var(--fabric-a);
+  color: var(--muted);
+  font-style: italic;
+}
+
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
+th { background: var(--panel); font-family: var(--sans); font-weight: 600; color: var(--ink); }
+
+/* --- shell ---------------------------------------------------------------- */
+
+.wrap  { width: 100%; max-width: var(--wide);  margin: 0 auto; padding: 0 var(--pad); }
+.prose { width: 100%; max-width: var(--prose); margin: 0 auto; padding: 0 var(--pad); }
+
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.site-head .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 62px;
+}
+
+.brand {
+  font-family: var(--sans);
+  font-weight: 650;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.brand:hover { text-decoration: none; }
+
+/* The A/B fabric pair, shrunk to a mark. */
+.brand .mark {
+  width: 15px; height: 15px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--fabric-a) 0 50%, var(--fabric-b) 50% 100%);
+  flex: none;
+}
+
+.site-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+.site-nav a {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 7px;
+}
+.site-nav a:hover { color: var(--ink); background: var(--panel2); text-decoration: none; }
+.site-nav a[aria-current="page"] { color: var(--ink); background: var(--panel2); }
+
+/* Keeps the footer on the bottom edge on short pages instead of leaving a
+   band of blank page underneath it. */
+main { display: block; flex: 1 0 auto; }
+.site-head, .site-foot { flex: none; }
+
+.site-foot {
+  margin-top: 5rem;
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  padding: 2rem 0 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* When the page already ends on a tinted band, the footer continues it --
+   no gap and no double hairline. The footer is tinted either way, so a
+   browser without :has() just shows the seam, never a colour mismatch. */
+main:has(> .band-tint:last-child) + .site-foot { margin-top: 0; border-top: 0; }
+.site-foot .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; justify-content: space-between; }
+.site-foot a { color: var(--muted); }
+.site-foot a:hover { color: var(--ink); }
+.site-foot p { margin: 0; }
+.foot-who { display: flex; align-items: center; gap: 9px; }
+.foot-who .mark {
+  width: 13px; height: 13px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--fabric-a) 0 50%, var(--fabric-b) 50% 100%);
+  flex: none;
+}
+.foot-links { display: flex; gap: 18px; }
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero { padding: 4.5rem 0 2.5rem; }
+
+.hero .eyebrow {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fabric-a);
+  margin: 0 0 1rem;
+}
+
+.hero h1 {
+  margin: 0 0 1.1rem;
+  font-size: clamp(2.1rem, 5.2vw, 3.3rem);
+  letter-spacing: -0.034em;
+  font-weight: 700;
+}
+
+.hero .lede {
+  font-size: clamp(1.1rem, 2.1vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--body);
+  max-width: 58ch;
+  margin: 0 0 1rem;
+}
+
+.hero .sub { color: var(--muted); max-width: 58ch; margin: 0 0 1.9rem; }
+
+/* The A/B split rule, again echoing the report header. */
+.rule-ab {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--fabric-a) 0 46%, var(--line) 46% 54%, var(--fabric-b) 54% 100%);
+  max-width: 220px;
+  margin: 0 0 2rem;
+}
+
+.hero .rule-ab { margin: 0 0 1.5rem; }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.btn {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 550;
+  padding: 9px 17px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background .15s, border-color .15s, transform .15s;
+}
+.btn:hover { text-decoration: none; background: var(--panel2); transform: translateY(-1px); }
+.btn-primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn-primary:hover { background: var(--ink); color: var(--bg); opacity: .88; }
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* --- generic section ------------------------------------------------------ */
+
+.band { padding: 3.2rem 0; }
+.band-tint { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+.band-head { margin-bottom: 1.6rem; }
+.band-head h2 { margin: 0 0 .35rem; }
+.band-head p  { margin: 0; color: var(--muted); font-size: .97rem; }
+
+.grid { display: grid; gap: 16px; }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+/* Explicit rather than auto-fit, so four cards never break to three plus a
+   stranded one. */
+.grid-4 { grid-template-columns: 1fr; }
+@media (min-width: 620px)  { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+.band-more {
+  margin: 1.4rem 0 0;
+  font-family: var(--sans);
+  font-size: .9rem;
+  font-weight: 550;
+}
+
+/* --- what I work on ------------------------------------------------------- */
+
+.facet {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 20px 22px;
+  border-top: 3px solid var(--fabric-b);
+}
+.facet:nth-child(odd) { border-top-color: var(--fabric-a); }
+.facet h3 { margin: 0 0 .45rem; font-size: 1.02rem; }
+.facet p  { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--muted); }
+
+/* --- writing cards -------------------------------------------------------- */
+
+.card {
+  display: block;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  color: inherit;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.card:hover {
+  text-decoration: none;
+  border-color: var(--faint);
+  box-shadow: 0 8px 26px -14px rgba(15, 23, 42, .3);
+  transform: translateY(-2px);
+}
+.card-body { padding: 20px 22px 22px; }
+.card .meta {
+  font-family: var(--sans);
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--fabric-a);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-bottom: .55rem;
+}
+.card .meta .dot { color: var(--faint); }
+.card h3 { margin: 0 0 .5rem; font-size: 1.22rem; }
+.card p  { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; max-width: 82ch; }
+.card .more {
+  display: inline-block;
+  margin-top: .9rem;
+  font-family: var(--sans);
+  font-size: .87rem;
+  font-weight: 550;
+  color: var(--link);
+}
+
+.card-shot {
+  display: block;
+  width: 100%;
+  /* Needed: the img carries width/height attributes to reserve space, and
+     aspect-ratio is ignored unless one of the two resolves to auto. Without
+     this the crop runs sideways instead of top-down. */
+  height: auto;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel2);
+  aspect-ratio: 25 / 9;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.card-feature { grid-column: 1 / -1; }
+
+/* --- repo cards ----------------------------------------------------------- */
+
+.repo {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px 20px;
+  background: var(--bg);
+  color: inherit;
+  transition: border-color .15s, transform .15s;
+}
+.repo:hover { text-decoration: none; border-color: var(--faint); transform: translateY(-2px); }
+.repo .name {
+  font-family: var(--mono);
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: .45rem;
+}
+.repo .name svg { width: 16px; height: 16px; fill: var(--muted); flex: none; }
+.repo p { margin: 0; font-size: .92rem; color: var(--muted); line-height: 1.55; max-width: 82ch; }
+.repo .tags { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 550;
+  color: var(--muted);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+/* --- section index list --------------------------------------------------- */
+
+.entry {
+  display: block;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+}
+.entry:first-of-type { border-top: 1px solid var(--line); }
+.entry:hover { text-decoration: none; }
+.entry:hover h3 { color: var(--link); }
+.entry .meta {
+  font-family: var(--sans);
+  font-size: .78rem;
+  color: var(--faint);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.entry h3 { margin: .3rem 0 .4rem; font-size: 1.3rem; }
+.entry p  { margin: 0; color: var(--muted); font-size: .96rem; }
+
+.empty {
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 2.4rem 1.5rem;
+  text-align: center;
+  color: var(--faint);
+  font-family: var(--sans);
+  font-size: .94rem;
+}
+
+/* --- article -------------------------------------------------------------- */
+
+.piece-head { padding: 3.4rem 0 0; }
+.piece-head .meta {
+  font-family: var(--sans);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fabric-a);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: .9rem;
+}
+.piece-head .meta .dot { color: var(--faint); }
+.piece-head h1 { margin: 0 0 .8rem; font-size: clamp(1.95rem, 4.4vw, 2.7rem); letter-spacing: -0.032em; }
+.piece-head .subtitle {
+  font-size: 1.16rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 1.6rem;
+}
+
+.piece { padding-bottom: 1rem; }
+.piece h2 { margin-top: 2.9rem; }
+.piece h2::after {
+  content: "";
+  display: block;
+  width: 46px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--fabric-a);
+  margin-top: .6rem;
+}
+.piece h3 { margin-top: 2rem; }
+
+.piece img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2rem 0 .6rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.piece ul, .piece ol { padding-left: 1.3rem; }
+.piece li { margin-bottom: .45rem; }
+
+/* Images are allowed to breathe past the measure -- the reports are dense. */
+@media (min-width: 900px) {
+  .piece img { width: calc(100% + 120px); margin-left: -60px; max-width: none; }
+}
+
+.canonical-note {
+  margin-top: 2.5rem;
+  padding: 18px 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: .87rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.canonical-note a { color: var(--link); }
+.canonical-note strong { color: var(--ink); font-weight: 600; }
+
+.page-head { padding: 3.4rem 0 .5rem; }
+.page-head h1 { margin: 0 0 .5rem; }
+.page-head .intro { color: var(--muted); margin: 0; font-size: 1.08rem; }
+.page-head + .piece { padding-top: 1.6rem; }
+
+@media (max-width: 640px) {
+  body { font-size: 18px; }
+  .hero { padding: 3rem 0 2rem; }
+  .band { padding: 2.4rem 0; }
+  .site-head .wrap { min-height: 56px; }
+  .site-nav a { padding: 5px 8px; font-size: .84rem; }
+  /* A 25:9 strip is too thin to read as a picture at phone width. */
+  .card-shot { aspect-ratio: 16 / 9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .card:hover, .repo:hover, .btn:hover { transform: none; }
+}

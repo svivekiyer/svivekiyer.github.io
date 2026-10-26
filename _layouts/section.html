@@ -2,25 +2,37 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
+{%- assign docs = site[page.collection] | sort: "date" | reverse -%}
 
-{% if page.intro %}<p>{{ page.intro }}</p>{% endif %}
+<header class="page-head">
+  <div class="prose">
+    <h1>{{ page.title }}</h1>
+    {%- if page.intro %}<p class="intro">{{ page.intro }}</p>{% endif -%}
+  </div>
+</header>
 
-{% assign docs = site[page.collection] | sort: "date" | reverse %}
+<section class="band">
+  <div class="prose">
 
-{% if docs.size == 0 %}
+    {%- if docs.size == 0 -%}
 
-  <p><em>Nothing here yet.</em></p>
+      <p class="empty">Nothing here yet.</p>
 
-{% else %}
+    {%- else -%}
 
-  <ul class="section-list">
-  {% for doc in docs %}
-    <li>
-      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
-      {% if doc.summary %}<br><span>{{ doc.summary }}</span>{% endif %}
-    </li>
-  {% endfor %}
-  </ul>
+      {%- for doc in docs -%}
+        <a class="entry" href="{{ doc.url | relative_url }}">
+          <p class="meta">
+            <span>{{ doc.date | date: "%-d %b %Y" }}</span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span>{{ doc.content | strip_html | number_of_words | divided_by: 220 | plus: 1 }} min read</span>
+          </p>
+          <h3>{{ doc.title }}</h3>
+          <p>{{ doc.summary | default: doc.subtitle }}</p>
+        </a>
+      {%- endfor -%}
 
-{% endif %}
+    {%- endif -%}
+
+  </div>
+</section>

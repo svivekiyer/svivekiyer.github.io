@@ -2,14 +2,23 @@
 layout: default
 ---
 
+<header class="piece-head">
+  <div class="prose">
+    <p class="meta">
+      {%- if page.section -%}<span>{{ page.section }}</span><span class="dot" aria-hidden="true">·</span>{%- endif -%}
+      <span>{{ page.date | date: "%-d %B %Y" }}</span>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>{{ content | strip_html | number_of_words | divided_by: 220 | plus: 1 }} min read</span>
+    </p>
+    <h1>{{ page.title }}</h1>
+    {%- if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif -%}
+    <div class="rule-ab" aria-hidden="true"></div>
+  </div>
+</header>
+
 <article class="piece">
-
-  <h1>{{ page.title }}</h1>
-
-  {% if page.subtitle %}<p><em>{{ page.subtitle }}</em></p>{% endif %}
-
-  {{ content }}
-
-  {% include canonical.html %}
-
+  <div class="prose">
+    {{ content }}
+    {% include canonical.html %}
+  </div>
 </article>

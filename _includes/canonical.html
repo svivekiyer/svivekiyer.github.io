@@ -1,11 +1,7 @@
-<hr>
-
-<p class="canonical-note">
-  {% if page.repo %}
-    Code: <a href="https://github.com/svivekiyer/{{ page.repo }}">github.com/svivekiyer/{{ page.repo }}</a><br>
-  {% endif %}
-  This page is the canonical home for this piece —
-  <a href="{{ page.url | absolute_url }}">{{ page.url | absolute_url }}</a><br>
-  <a href="https://github.com/svivekiyer">GitHub</a> ·
-  <a href="{{ site.linkedin_url }}">LinkedIn</a>
-</p>
+<div class="canonical-note">
+  {%- if page.repo %}
+    <strong>Code:</strong> <a href="{{ site.github_url }}/{{ page.repo }}">github.com/{{ site.github_username }}/{{ page.repo }}</a><br>
+  {% endif -%}
+  This page is the canonical home for this piece — <a href="{{ page.url | absolute_url }}">{{ page.url | absolute_url }}</a><br>
+  <a href="{{ site.github_url }}">GitHub</a> · <a href="{{ site.linkedin_url }}">LinkedIn</a>
+</div>
